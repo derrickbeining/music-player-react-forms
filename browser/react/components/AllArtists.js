@@ -4,11 +4,18 @@ import axios from 'axios';
 
 export default class AllArtists extends Component {
 
-  constructor () {
+  constructor() {
     super();
     this.state = {
-      artists: []
+      artists: [],
+      input: ''
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({input: e.target.value})
+    .then();
   }
 
   componentDidMount () {
@@ -19,10 +26,18 @@ export default class AllArtists extends Component {
 
   render () {
 
-    const artists = this.state.artists;
-
+    const artists = this.state.artists.filter(artist => {
+      return artist.name.match(this.state.input);
+    });
     return (
       <div>
+        <form className="form-group" style={{marginTop: '20px'}}>
+          <input
+            className="form-control"
+            placeholder="Enter artist name"
+            onChange={this.handleChange}
+          />
+        </form>
         <h3>Artists</h3>
         <div className="list-group">
           {
