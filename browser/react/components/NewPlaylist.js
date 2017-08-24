@@ -17,7 +17,7 @@ export default class NewPlaylist extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    console.log(this.state.value);
+    console.log(this.state.value); //FIXME:
     this.setState({value: ''});
   }
 
