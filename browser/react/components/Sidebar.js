@@ -7,7 +7,7 @@ const Sidebar = (props) => {
   function makeList () {
     return playlists.map(playlist => {
       return (
-        <li className="playlist-item menu-item">
+        <li className="playlist-item menu-item" key={playlist.id.toString()}>
           <Link to="FILL_ME_IN">{playlist.name}</Link>
         </li>
       )
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
         <h4 className="text-muted">PLAYLISTS</h4>
         <h4>
           <Link className="btn btn-primary btn-block" to="/new-playlist" >
-            <span className="glyphicon glyphicon-plus"></span> PLAYLIST
+            <span className="glyphicon glyphicon-plus" /> PLAYLIST
           </Link>
         </h4>
       </section>
