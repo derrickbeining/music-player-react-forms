@@ -2,6 +2,17 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const Sidebar = (props) => {
+  const playlists = props.playlists;
+
+  function makeList () {
+    return playlists.map(playlist => {
+      return (
+        <li className="playlist-item menu-item">
+          <Link to="FILL_ME_IN">{playlist.name}</Link>
+        </li>
+      )
+    })
+  }
 
   return (
     <sidebar>
@@ -25,6 +36,10 @@ const Sidebar = (props) => {
           </Link>
         </h4>
       </section>
+      <hr />
+      <ul className="list-unstyled">
+        {makeList()}
+      </ul>
     </sidebar>
   );
 }

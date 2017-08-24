@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class NewPlaylist extends Component {
   constructor() {
@@ -19,11 +20,15 @@ export default class NewPlaylist extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    console.log(this.state.value); //FIXME:
-    this.setState({value: '', isDirty: false});
+    axios.post('api/playlists', {name: this.state.value})
+      .then(res => res.data)
+      .then(console.log.bind(console))
+      .then(() => this.setState({value: '', isDirty: false}))
+      .catch(console.error.bind(console));
   }
 
-  isSubmitDisabled() {
+
+  isSubmitDisabled () {
     return this.state.value.length > 16 || this.state.value.length === 0;
   }
 
@@ -40,7 +45,7 @@ export default class NewPlaylist extends Component {
                 {
                   this.state.isDirty && <div className="alert alert-warning">Please enter a name</div>
                 }
-                </div>
+              </div>
             </div>
             <div className="form-group">
               <div className="col-xs-10 col-xs-offset-2">

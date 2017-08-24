@@ -12,7 +12,9 @@ export default class Main extends Component {
 
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      playlists: [],
+    };
   }
 
   render () {
@@ -22,7 +24,7 @@ export default class Main extends Component {
       <Router>
         <div id="main" className="container-fluid">
           <div className="col-xs-2">
-            <Sidebar />
+            <Sidebar playlists={this.state.playlists} />
           </div>
           <div className="col-xs-10">
             <Switch>
