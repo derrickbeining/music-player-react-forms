@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 export default class AllArtists extends Component {
@@ -13,22 +13,32 @@ export default class AllArtists extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({input: e.target.value})
-    .then();
-  }
-
   componentDidMount () {
     axios.get('/api/artists')
       .then(res => res.data)
-      .then(artists => this.setState({ artists }));
+      .then(artists => this.setState({artists}));
+  }
+
+  handleChange (event) {
+    this.setState({input: event.target.value})
+  }
+
+  listArtistsFilterdByInput () {
+    const artists = this.state.artists.filter(artist => {
+      return artist.name.toLowerCase().match(this.state.input.toLowerCase());
+    });
+    return artists.map(artist => {
+      return (
+        <div className="list-group-item" key={artist.id}>
+          <Link to={`/artists/${artist.id}`}>{artist.name}</Link>
+        </div>
+      );
+    })
   }
 
   render () {
 
-    const artists = this.state.artists.filter(artist => {
-      return artist.name.match(this.state.input);
-    });
+
     return (
       <div>
         <form className="form-group" style={{marginTop: '20px'}}>
@@ -40,15 +50,7 @@ export default class AllArtists extends Component {
         </form>
         <h3>Artists</h3>
         <div className="list-group">
-          {
-            artists.map(artist => {
-              return (
-                <div className="list-group-item" key={artist.id}>
-                  <Link to={`/artists/${artist.id}`}>{ artist.name }</Link>
-                </div>
-              );
-            })
-          }
+          {this.listArtistsFilterdByInput()}
         </div>
       </div>
     );

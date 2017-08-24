@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import Songs from '../components/Songs';
 
 export default class SingleAlbum extends Component {
 
-  constructor () {
+  constructor() {
     super();
     this.state = {
       album: {}
@@ -27,8 +27,8 @@ export default class SingleAlbum extends Component {
     return (
       <div className="album">
         <div>
-          <h3>{ album.name }</h3>
-          <img src={ album.imageUrl } className="img-thumbnail" />
+          <h3>{album.name}</h3>
+          <img src={album.imageUrl} className="img-thumbnail" />
         </div>
         <Songs songs={album.songs} />
       </div>

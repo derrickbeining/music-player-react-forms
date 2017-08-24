@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Songs = (props) => {
+export default function Songs (props) {
 
   const songs = props.songs;
 
@@ -23,11 +23,11 @@ const Songs = (props) => {
                   <span className="glyphicon glyphicon-play"></span>
                 </button>
               </td>
-              <td>{ song.name }</td>
+              <td>{song.name}</td>
               <td>
-                <span>{ song.artists ? song.artists.map(artist => artist.name).join(', ') : null }</span>
+                <span>{song.artists ? song.artists.map(artist => artist.name).join(', ') : null}</span>
               </td>
-              <td>{ song.genre }</td>
+              <td>{song.genre}</td>
             </tr>
           ))
         }
@@ -36,4 +36,4 @@ const Songs = (props) => {
   );
 }
 
-export default Songs;
+

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Songs from './songs';
+import AddSongForm from './AddSongForm';
 import axios from 'axios';
 
 export default class SinglePlaylist extends Component {
@@ -8,26 +9,42 @@ export default class SinglePlaylist extends Component {
     this.state = {
       playlist: {}
     }
+
+    this.setPlaylistById = this.setPlaylistById.bind(this);
+    this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
   }
 
   componentDidMount () {
     const playlistId = this.props.match.params.playlistId;
-    axios.get(`api/playlists/${playlistId}`)
-      .then(res => res.data)
-      .then(playlist => this.setState({playlist}))
-      .catch(console.error.bind(console));
+    this.setPlaylistById(playlistId);
   }
 
   componentWillReceiveProps (nextProps) {
     const nextPlaylistId = nextProps.match.params.playlistId;
     const currentPlaylistId = this.props.match.params.playlistId;
     if (currentPlaylistId !== nextPlaylistId) {
-      axios.get(`api/playlists/${nextPlaylistId}`)
-        .then(res => res.data)
-        .then(playlist => this.setState({playlist}))
-        .catch(console.error.bind(console));
+      this.setPlaylistById(nextPlaylistId);
     }
   }
+
+  setPlaylistById (id) {
+    axios.get(`api/playlists/${id}`)
+      .then(res => res.data)
+      .then(playlist => {
+        console.log(playlist);
+        this.setState({playlist})
+      })
+      .catch(console.error.bind(console));
+  }
+
+  addSongToPlaylist (song) {
+    this.setState((prevState) => {
+      const prevSongs = prevState.playlist.songs;
+      prevState.playlist.songs = [ ...prevSongs, song ];
+      return prevState;
+    })
+  }
+
 
   render () {
     const playlist = this.state.playlist;
@@ -37,6 +54,7 @@ export default class SinglePlaylist extends Component {
         <Songs songs={playlist.songs} /> {/** Hooray for reusability! */}
         {playlist.songs && !playlist.songs.length && <small>No songs.</small>}
         <hr />
+        <AddSongForm playlistId={this.state.playlist.id} addSongToPlaylist={this.addSongToPlaylist} />
       </div>
     )
   }

@@ -52,8 +52,7 @@ export default class Main extends Component {
               <Route path="/albums/:albumId" component={SingleAlbum} />
               <Route exact path="/artists" component={AllArtists} />
               <Route path="/artists/:artistId" component={SingleArtist} />
-              <Route
-                path="/new-playlist"
+              <Route path="/new-playlist"
                 render={() => <NewPlaylist addPlaylist={this.addPlaylist} />}
               />
               <Route path="/playlists/:playlistId" component={SinglePlaylist} />
