@@ -5,6 +5,7 @@ export default class NewPlaylist extends Component {
     super()
     this.state = {
       value: '',
+      isDirty: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,13 +13,18 @@ export default class NewPlaylist extends Component {
 
   handleChange (event) {
     const value = event.target.value;
-    this.setState({value})
+    const isDirty = (value.length > 16 || value.length === 0);
+    this.setState({value, isDirty});
   }
 
   handleSubmit (event) {
     event.preventDefault();
     console.log(this.state.value); //FIXME:
-    this.setState({value: ''});
+    this.setState({value: '', isDirty: false});
+  }
+
+  isSubmitDisabled() {
+    return this.state.value.length > 16 || this.state.value.length === 0;
   }
 
   render () {
@@ -31,11 +37,14 @@ export default class NewPlaylist extends Component {
               <label className="col-xs-2 control-label">Name</label>
               <div className="col-xs-10">
                 <input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} />
-              </div>
+                {
+                  this.state.isDirty && <div className="alert alert-warning">Please enter a name</div>
+                }
+                </div>
             </div>
             <div className="form-group">
               <div className="col-xs-10 col-xs-offset-2">
-                <button type="submit" className="btn btn-success">Create Playlist</button>
+                <button type="submit" className="btn btn-success" disabled={this.isSubmitDisabled()}>Create Playlist</button>
               </div>
             </div>
           </fieldset>
