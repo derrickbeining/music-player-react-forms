@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Sidebar = (props) => {
 
@@ -20,7 +20,7 @@ const Sidebar = (props) => {
       <section>
         <h4 className="text-muted">PLAYLISTS</h4>
         <h4>
-          <Link className="btn btn-primary btn-block" to="/new-playlist" />
+          <Link className="btn btn-primary btn-block" to="/new-playlist" >
             <span className="glyphicon glyphicon-plus"></span> PLAYLIST
           </Link>
         </h4>
