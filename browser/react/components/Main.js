@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import StatefulAlbums from './StatefulAlbums';
 import SingleAlbum from './SingleAlbum';
 import AllArtists from './AllArtists';
@@ -10,7 +10,7 @@ import Player from './Player';
 
 export default class Main extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {};
   }
@@ -36,7 +36,7 @@ export default class Main extends Component {
           </div>
           <Player />
         </div>
-    </Router>
+      </Router>
     );
   }
 }
