@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import StatefulAlbums from './StatefulAlbums';
 import SingleAlbum from './SingleAlbum';
 import AllArtists from './AllArtists';
@@ -21,22 +21,22 @@ export default class Main extends Component {
     this.addPlaylist = this.addPlaylist.bind(this);
   }
 
-  addPlaylist(playlistName) {
+  addPlaylist (playlistName) {
     axios.post('api/playlists', {name: playlistName})
-    .then(res => res.data)
-    .then((playlist) => this.setState((prevState) => ({playlists: [...prevState.playlists, playlist]})))
-    .then(console.log.bind(console))
-    .catch(console.error.bind(console));
+      .then(res => res.data)
+      .then((playlist) => this.setState((prevState) => ({playlists: [ ...prevState.playlists, playlist ]})))
+      .then(console.log.bind(console))
+      .catch(console.error.bind(console));
   }
 
-  componentDidMount() {
+  componentDidMount () {
     axios.get('/api/playlists')
-    .then(res => res.data)
-    .then(playlists => {
-      console.log(playlists);
-      this.setState({playlists});
-    })
-    .catch(console.error.bind(console));
+      .then(res => res.data)
+      .then(playlists => {
+        console.log(playlists);
+        this.setState({playlists});
+      })
+      .catch(console.error.bind(console));
   }
 
   render () {
@@ -52,7 +52,10 @@ export default class Main extends Component {
               <Route path="/albums/:albumId" component={SingleAlbum} />
               <Route exact path="/artists" component={AllArtists} />
               <Route path="/artists/:artistId" component={SingleArtist} />
-              <Route path="/new-playlist" render={() => <NewPlaylist addPlaylist={this.addPlaylist} />} />
+              <Route
+                path="/new-playlist"
+                render={() => <NewPlaylist addPlaylist={this.addPlaylist} />}
+              />
               <Route path="/playlists/:playlistId" component={SinglePlaylist} />
               <Route component={StatefulAlbums} />
             </Switch>
