@@ -1,6 +1,7 @@
 // RENDERED IN SinglePlaylist
 
 import React, {Component} from 'react';
+import ValidationErrorNotification from './ValidationErrorNotification';
 import axios from 'axios';
 
 export default class AddSongForm extends Component {
@@ -9,6 +10,7 @@ export default class AddSongForm extends Component {
     this.state = {
       selectedSongId: '',
       songs: [],
+      displayError: false,
     }
     this.generateSelectOptions = this.generateSelectOptions.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,7 +33,10 @@ export default class AddSongForm extends Component {
 
   handleChange (event) {
     const inputValue = event.target.value;
-    this.setState({selectedSongId: inputValue});
+    this.setState({
+      selectedSongId: inputValue,
+      displayError: false,
+    });
   }
 
   handleSubmit (event) {
@@ -43,12 +48,17 @@ export default class AddSongForm extends Component {
       {id: songId}
     )
       .then(res => res.data)
-      .then(addedSong => this.props.addSongToPlaylist(addedSong))
-      .catch(console.error.bind(console));
+      .then(this.props.addSongToPlaylist)
+      .catch(reason => {
+        console.error.bind(console);
+        this.setState({displayError: true});
+      });
 
   }
 
   render () {
+    const shouldDisplayError = this.state.displayError;
+    const errorMessage = 'Sorry, there seemed to be an error. Did you try to add a duplicate song? Try adding a song not already in your playlist!'
     return (
       <div className="well">
         <form
@@ -71,6 +81,7 @@ export default class AddSongForm extends Component {
                 >
                   {this.generateSelectOptions()}
                 </select>
+                {shouldDisplayError && <ValidationErrorNotification message={errorMessage} />}
               </div>
             </div>
             <div className="form-group">
